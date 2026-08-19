@@ -1,0 +1,16 @@
+langchain
+langgraph
+langchain-core
+langchain-community
+ipykernel
+ipython
+python-dotenv
+langchain-openai
+langchain-groq
+dotenv
+pydantic
+faiss-cpu
+pylance
+langchain-tavily
+litellm
+pypdf
