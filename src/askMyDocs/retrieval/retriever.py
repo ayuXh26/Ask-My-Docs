@@ -1,0 +1,15 @@
+from src.askMyDocs.ingestion.vector_store import load_vector_store
+from langchain_pinecone import PineconeVectorStore
+
+def create_retriever():
+
+    vector_store = load_vector_store()
+
+    retriever = vector_store.as_retriever(
+        search_type = "mmr",
+        search_kwargs = {
+            "k" : 3
+        }
+    )
+    
+    return retriever

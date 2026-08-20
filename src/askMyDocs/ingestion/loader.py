@@ -1,4 +1,4 @@
-from askMyDocs.ingestion.ingest import collect_documents
+from src.askMyDocs.ingestion.ingest import collect_documents
 from langchain_community.document_loaders import PyPDFLoader
 
 

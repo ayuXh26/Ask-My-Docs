@@ -14,3 +14,7 @@ pylance
 langchain-tavily
 litellm
 pypdf
+chroma
+pinecone
+tiktoken
+langchain_pinecone

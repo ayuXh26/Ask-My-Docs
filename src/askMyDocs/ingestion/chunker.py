@@ -1,4 +1,4 @@
-from askMyDocs.ingestion.loader import load_documents
+from src.askMyDocs.ingestion.loader import load_documents
 from langchain_classic import text_splitter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -13,5 +13,3 @@ def chunk_documents():
     chunks = text_splitter.split_documents(files)
 
     return chunks
-
-chunks = chunk_documents()
