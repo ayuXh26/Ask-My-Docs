@@ -1,5 +1,4 @@
 from src.askMyDocs.ingestion.vector_store import load_vector_store
-from langchain_pinecone import PineconeVectorStore
 
 def create_retriever():
 
@@ -11,5 +10,5 @@ def create_retriever():
             "k" : 3
         }
     )
-    
+
     return retriever
