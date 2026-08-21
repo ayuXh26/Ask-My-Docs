@@ -77,3 +77,4 @@ def load_vector_store():
     except Exception as e:
         print(f"Failed to load index: '{index_name}' : {e}")
         
+        
