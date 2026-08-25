@@ -16,7 +16,7 @@ def embedding_docs():
 
     return chunks, embeddings #Need both for Pinecone
 
-"""
+'''
 if __name__ == "__main__":
     chunks, embeddings = embedding_docs()
 
@@ -24,4 +24,4 @@ if __name__ == "__main__":
     print("Number of embeddings:", len(embeddings))
     print("Embedding dimension:", len(embeddings[0]))
     print("First chunk metadata:", chunks[0].metadata)
-"""
+'''

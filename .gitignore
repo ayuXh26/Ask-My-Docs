@@ -15,3 +15,4 @@ src/askMyDocs/retrieval/test_retriever.py
 src/askMyDocs/generation/test_context_builder.py
 src/askMyDocs/LLM/test_llm.py
 src/askMyDocs/rag_chain/test_chain.py
+indexed_chunks.json

@@ -1,4 +1,4 @@
-from src.askMyDocs.ingestion.vector_store import load_vector_store
+from src.askMyDocs.ingestion.pinecone_vector_store import load_vector_store
 
 def create_retriever():
 
