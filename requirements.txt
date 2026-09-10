@@ -1,7 +1,7 @@
 langchain
 langgraph
 langchain-core
-langchain-community
+langchain-community==0.3.31
 ipykernel
 ipython
 python-dotenv
@@ -18,3 +18,4 @@ chroma
 pinecone
 tiktoken
 langchain_pinecone
+deepeval
