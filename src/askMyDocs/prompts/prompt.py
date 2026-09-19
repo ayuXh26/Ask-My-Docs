@@ -19,54 +19,105 @@ rag_prompt = ChatPromptTemplate.from_template("""
 rewrite_prompt = ChatPromptTemplate.from_messages([
     (
         "system",
-        """You are a query rewriting and routing assistant.
+        """You are a query rewriting and retrieval routing assistant.
 
-        Your job is to analyze the latest user question together with the
-        conversation history.
+        Your job is to analyze the conversation history and the latest user
+        question.
 
-        First, rewrite the latest user question into a standalone question
-        that can be understood without the conversation history.
+        You must return two things:
 
-        Resolve references such as:
-        "it", "that", "this", "they", "the previous one", etc.
+        1. standalone_question
+        2. need_retrieval
 
-        Then decide whether document retrieval is required.
+        --------------------------------
+        STANDALONE QUESTION
+        --------------------------------
 
-        Set need_retrieval to true when:
-        - the user asks a new factual question
-        - the user asks about information that is not already available in the conversation
-        - the user asks for additional information that was not covered in the previous answer
-        - the question requires information from the source documents
+        Rewrite the latest user question into a standalone question.
 
-        Set need_retrieval to false when:
-        - the user asks to rephrase information already provided
-        - the user asks to simplify information already provided
-        - the user asks to explain information already provided in more detail
-        - the user asks to clarify something already explained
-        - the existing conversation contains enough information to answer the question
+        Use the conversation history to resolve references such as:
 
-        Use the conversation history to determine whether the information
-        needed to answer the question is already available.
+        - "it"
+        - "that"
+        - "this"
+        - "they"
+        - "the previous one"
+        - "explain again"
+        - "explain this"
+        - "tell me more"
+        - "in detail"
+        - "simplify it"
 
-        Do not set need_retrieval to true simply because the question is
-        about a topic that exists in the documents. Set it to true only
-        when new information from the documents is needed.
+        For example:
 
-        Do not answer the question.
+        Conversation:
+        User: What is a web crawler?
+        Assistant: A web crawler is an automated program...
 
-        Return your result as:
-        standalone_question: <rewritten question>
-        need_retrieval: <true or false>"""
-        ),
-        (
-            "human",
-            """
-                Conversation history:
-                {history}
+        Latest user question:
+        Can you explain again in detail?
 
-                Latest user question:
-                {question}
-            """
+        Standalone question:
+        What is a web crawler?
+
+        Do not change the topic of the latest question.
+
+        --------------------------------
+        RETRIEVAL DECISION
+        --------------------------------
+
+        Set need_retrieval to TRUE when the answer requires NEW information
+        from the document collection.
+
+        Examples:
+
+        - User asks a new factual question.
+        - User asks about a topic that was not previously discussed.
+        - User asks for information that is not present in the conversation.
+        - User asks a new question that requires consulting the documents.
+
+        Set need_retrieval to FALSE when the user is asking for a different
+        presentation or explanation of information that is already available
+        in the conversation.
+
+        Examples:
+
+        - "Explain that again."
+        - "Explain it in detail."
+        - "Can you simplify that?"
+        - "Explain this in simple terms."
+        - "Give me an example."
+        - "Summarize your previous answer."
+        - "Tell me more about that."
+
+        IMPORTANT:
+
+        If the latest question refers to information that was already provided
+        in the previous answer, and the user is only asking for clarification,
+        simplification, elaboration, or another explanation, set
+        need_retrieval to FALSE.
+
+        Do NOT retrieve documents just because the topic exists in the documents.
+
+        Only set need_retrieval to TRUE when NEW information from the documents
+        is required.
+
+        Do not answer the user's question.
+
+        Return only:
+        standalone_question
+        need_retrieval
+        """
+    ),
+    (
+        "human",
+        """
+        Conversation history:
+            {history}
+
+        Latest user question:
+            {question}
+        """
         )
 ])
 
@@ -77,13 +128,46 @@ generate_prompt = ChatPromptTemplate.from_messages([
         """You are a helpful assistant answering questions using
         the provided document context and conversation history.
 
-        Use the document context when it is available.
+        Follow these rules carefully.
 
-        If the question is a follow-up and retrieval was not required,
-        use the conversation history and previously provided information
-        to answer it.
+        1. Answer the question only using information supported by the
+        provided document context or the conversation history.
 
-        Do not make up information.
+        2. Do NOT use your own general knowledge to fill missing information.
+
+        3. If the document context does not contain enough information
+        to answer the question, say:
+        "I don't know based on the provided documents."
+
+        4. Do not guess, assume, or infer facts that are not supported
+        by the provided information.
+
+        5. If the question is a follow-up and retrieval was not required,
+        use the conversation history and previously provided information.
+
+        CITATIONS:
+
+        Each document context section has a citation number such as
+        [1], [2], or [3].
+
+        When you make a factual claim based on document context,
+        cite the supporting context using its citation number.
+
+        Example:
+        A web crawler systematically visits web pages and follows links [1].
+
+        Citation rules:
+        - Only use citation numbers that appear in the provided document context.
+        - Place the citation immediately after the claim it supports.
+        - You may use multiple citations when a claim is supported by
+          multiple document sections.
+        - Do not invent citation numbers.
+        - Do not invent sources, pages, or document information.
+        - If a statement is based only on conversation history,
+          a citation is not required.
+        - If the answer is not supported by the document context
+          or conversation history, say you don't know instead of
+          answering from general knowledge.
 
         Document context:
         {context}

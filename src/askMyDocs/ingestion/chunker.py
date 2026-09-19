@@ -16,10 +16,3 @@ def chunk_documents():
 
 
 chunks = chunk_documents()
-
-print("Total chunks:", len(chunks))
-
-for i, chunk in enumerate(chunks[:10]):
-    print(f"\n--- Chunk {i} ---")
-    print("Metadata:", chunk.metadata)
-    print("Text:", chunk.page_content[:150])

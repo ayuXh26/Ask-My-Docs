@@ -1,9 +1,21 @@
+from src.askMyDocs.generation.citations import extract_sources
+
 def build_context(documents):
 
-    context = "\n\n".join(
-        document.page_content
-        for document in documents
-    )
+    sources = extract_sources(documents)
 
-    return context
+    context_parts = []
+
+    for document, source in zip(documents, sources):
+
+        context_parts.append(
+            f"[{source['id']}]\n"
+            f"Source: {source['source']}\n"
+            f"Page: {source['page']}\n"
+            f"Content:\n{document.page_content}"
+        )
+
+    context = "\n\n".join(context_parts)
+
+    return context, sources
 
