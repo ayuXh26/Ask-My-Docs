@@ -2,8 +2,7 @@ from typing import TypedDict, Annotated
 from langchain_core.messages import BaseMessage
 from langgraph.graph.message import add_messages
 from langchain_core.documents import Document
-
-from src.askMyDocs.generation import citations
+from src.askMyDocs.citation import citations
 
 
 class graphState(TypedDict):

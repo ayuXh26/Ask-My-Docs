@@ -1,7 +1,7 @@
-from src.askMyDocs.generation import citations
+from src.askMyDocs.citation import citations
 from src.askMyDocs.state.graph_state import graphState
 from src.askMyDocs.retrieval.retriever import create_retriever
-from src.askMyDocs.generation.citations import extract_sources
+from src.askMyDocs.citation.citations import extract_sources
 
 retriever = create_retriever()
 def retrieve_node(state: graphState):

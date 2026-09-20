@@ -1,9 +1,9 @@
 from src.askMyDocs.state.graph_state import graphState
 from src.askMyDocs.LLM.llm import create_llm
 from src.askMyDocs.prompts.prompt import generate_prompt
-from src.askMyDocs.generation.context_builder import build_context
-from src.askMyDocs.generation.citation_validator import validate_citations
-from src.askMyDocs.generation.citation_mapper import map_citations
+from src.askMyDocs.citation.context_builder import build_context
+from src.askMyDocs.citation.citation_validator import validate_citations
+from src.askMyDocs.citation.citation_mapper import map_citations
 
 llm = create_llm()
 generate_chain = generate_prompt | llm

@@ -1,4 +1,4 @@
-from src.askMyDocs.generation.citations import extract_sources
+from src.askMyDocs.citation.citations import extract_sources
 
 def build_context(documents):
 
