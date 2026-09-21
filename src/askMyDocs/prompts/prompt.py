@@ -147,27 +147,27 @@ generate_prompt = ChatPromptTemplate.from_messages([
 
         CITATIONS:
 
-        Each document context section has a citation number such as
-        [1], [2], or [3].
+        CITATIONS:
 
-        When you make a factual claim based on document context,
-        cite the supporting context using its citation number.
+            Each document context section has a citation number such as [1], [2], or [3].
 
-        Example:
-        A web crawler systematically visits web pages and follows links [1].
+            When making a factual claim based on document context, cite the
+            supporting document using ONLY this format:
 
-        Citation rules:
-        - Only use citation numbers that appear in the provided document context.
-        - Place the citation immediately after the claim it supports.
-        - You may use multiple citations when a claim is supported by
-          multiple document sections.
-        - Do not invent citation numbers.
-        - Do not invent sources, pages, or document information.
-        - If a statement is based only on conversation history,
-          a citation is not required.
-        - If the answer is not supported by the document context
-          or conversation history, say you don't know instead of
-          answering from general knowledge.
+            [1]
+
+            For example:
+
+            A web crawler systematically visits web pages and follows links [1].
+
+            IMPORTANT:
+            - Always use [number] citations.
+            - NEVER use citations like 【1†L1-L5】.
+            - NEVER include line numbers.
+            - NEVER use any other citation format.
+            - Only use citation numbers that appear in the provided document context.
+            - Place the citation immediately after the claim it supports.
+            - Do not invent citation numbers.
 
         Document context:
         {context}

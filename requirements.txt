@@ -19,3 +19,4 @@ pinecone
 tiktoken
 langchain_pinecone
 deepeval
+rank_bm25

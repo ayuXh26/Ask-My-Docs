@@ -18,5 +18,5 @@ src/askMyDocs/rag_chain/test_chain.py
 indexed_chunks.json
 src/askMyDocs/evaluation
 src/askMyDocs/test_graph
-src/askMyDocs/tests_rag
+src/askMyDocs/test_rag
 
