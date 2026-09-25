@@ -5,7 +5,7 @@ def create_bm25_retriever():
     chunks = chunk_documents()
 
     retriever = BM25Retriever.from_documents(chunks)
-    retriever.k = 3
+    retriever.k = 20
 
     return retriever
 

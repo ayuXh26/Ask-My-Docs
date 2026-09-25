@@ -1,5 +1,5 @@
 from src.askMyDocs.retrieval.retriever import create_retriever
-from src.askMyDocs.generation.context_builder import build_context
+from src.askMyDocs.citation.context_builder import build_context
 from src.askMyDocs.prompts.prompt import rag_prompt
 from src.askMyDocs.LLM.llm import create_llm
 

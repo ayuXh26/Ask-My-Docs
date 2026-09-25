@@ -20,3 +20,4 @@ tiktoken
 langchain_pinecone
 deepeval
 rank_bm25
+langchain_cohere

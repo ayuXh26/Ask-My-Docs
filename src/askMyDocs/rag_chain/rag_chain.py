@@ -3,7 +3,7 @@ from operator import itemgetter
 from langchain_core.runnables import RunnablePassthrough
 
 from src.askMyDocs.citation.context_builder import build_context
-from src.askMyDocs.retrieval.retriever import create_retriever
+from src.askMyDocs.retrieval.hybrid_retriever import create_hybrid_retriever
 from src.askMyDocs.prompts.prompt import rag_prompt
 from src.askMyDocs.LLM.llm import create_llm
 from src.askMyDocs.citation.citations import extract_sources
@@ -11,7 +11,7 @@ from src.askMyDocs.citation.citations import extract_sources
 
 def create_rag_chain():
 
-    retriever = create_retriever()
+    retriever = create_hybrid_retriever()
     prompt = rag_prompt
     llm = create_llm()
 
