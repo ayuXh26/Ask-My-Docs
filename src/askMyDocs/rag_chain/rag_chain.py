@@ -35,13 +35,13 @@ def create_rag_chain():
     )
 
     chain = (
-    retrieval_chain
-    | RunnablePassthrough.assign(
-        answer=answer_chain
+        retrieval_chain
+        | RunnablePassthrough.assign(
+            answer=answer_chain
+        )
+        | RunnablePassthrough.assign(
+            sources=lambda x: extract_sources(x["documents"])
+        )
     )
-    | RunnablePassthrough.assign(
-        sources=lambda x: extract_sources(x["documents"])
-    )
-)
 
     return chain

@@ -1,9 +1,9 @@
 from src.askMyDocs.citation import citations
 from src.askMyDocs.state.graph_state import graphState
-from src.askMyDocs.retrieval.retriever import create_retriever
+from src.askMyDocs.retrieval.hybrid_retriever import create_hybrid_retriever
 from src.askMyDocs.citation.citations import extract_sources
 
-retriever = create_retriever()
+retriever = create_hybrid_retriever()
 def retrieve_node(state: graphState):
     question = state["standalone_question"]
     chunks = retriever.invoke(question)
