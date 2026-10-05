@@ -20,3 +20,4 @@ src/askMyDocs/evaluation
 src/askMyDocs/test_graph
 src/askMyDocs/test_rag
 
+.deepeval
