@@ -1,21 +1,19 @@
-from src.askMyDocs.citation.citations import extract_sources
+from src.askMyDocs.citation.citations import group_chunks
+
 
 def build_context(documents):
-
-    sources = extract_sources(documents)
-
+    """Return (context_string_for_prompt, sources). Numbers in the context match sources."""
     context_parts = []
+    sources = []
 
-    for document, source in zip(documents, sources):
-
+    for source, docs in group_chunks(documents):
+        sources.append(source)
+        content = "\n\n".join(doc.page_content.strip() for doc in docs)
         context_parts.append(
             f"[{source['id']}]\n"
             f"Source: {source['source']}\n"
             f"Page: {source['page']}\n"
-            f"Content:\n{document.page_content}"
+            f"Content:\n{content}"
         )
 
-    context = "\n\n".join(context_parts)
-
-    return context, sources
-
+    return "\n\n".join(context_parts), sources

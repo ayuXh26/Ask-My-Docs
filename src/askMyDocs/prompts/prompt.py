@@ -168,6 +168,8 @@ generate_prompt = ChatPromptTemplate.from_messages([
             - Only use citation numbers that appear in the provided document context.
             - Place the citation immediately after the claim it supports.
             - Do not invent citation numbers.
+            - If several passages support a claim, write them together: [1][2].
+            - If you answer "I don't know based on the provided documents.", add no citations.
 
         Document context:
         {context}

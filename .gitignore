@@ -19,5 +19,5 @@ indexed_chunks.json
 src/askMyDocs/evaluation
 src/askMyDocs/test_graph
 src/askMyDocs/test_rag
-
+src/askMyDocs/citation/test_context_builder
 .deepeval
