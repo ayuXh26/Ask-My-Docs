@@ -29,5 +29,6 @@ dependencies = [
     "python-dotenv>=1.2.3",
     "ragas>=0.4.3",
     "rank-bm25>=0.2.2",
+    "tavily-python>=0.8.5",
     "tiktoken>=0.13.0",
 ]
