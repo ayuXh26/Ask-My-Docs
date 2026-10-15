@@ -70,3 +70,4 @@ def group_chunks(documents):
 
 def extract_sources(documents):
     return [source for source, _ in group_chunks(documents)]
+
