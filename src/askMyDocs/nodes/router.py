@@ -9,36 +9,58 @@ from src.askMyDocs.LLM.llm import create_llm
 
 logger = logging.getLogger(__name__)
 
-llm = create_llm()  # make sure this is configured with temperature=0
+llm = create_llm()
 
 
 class routerDecision(BaseModel):
     reason: str = Field(
         description="One sentence naming the rule that applies and why."
     )
-    route: Literal["direct", "retrieve", "web_search", "out_of_scope"] = Field(
+
+    route: Literal[
+        "direct",
+        "retrieve",
+        "web_search",
+        "out_of_scope",
+        "agent",
+    ] = Field(
         description="The component that should handle the question."
     )
 
 
 router_chain = router_prompt | llm.with_structured_output(routerDecision)
 
-DEFAULT_ROUTE = "retrieve"  
+DEFAULT_ROUTE = "retrieve"
 
 
 def router_node(state: graphState) -> dict:
-    question = state["standalone_question"].strip()
+    question = state.get("standalone_question", "").strip()
 
     if not question:
-        return {"route": "direct", "need_retrieval": False}
+        return {
+            "route": "direct",
+            "need_retrieval": False,
+        }
 
     try:
-        decision = router_chain.invoke({"standalone_question": question})
+        decision = router_chain.invoke({
+            "standalone_question": question
+        })
+
         route = decision.route
-        logger.info("route=%s | reason=%s | q=%r", route, decision.reason, question)
+
+        logger.info(
+            "route=%s | reason=%s | q=%r",
+            route,
+            decision.reason,
+            question,
+        )
+
     except Exception:
-        
-        logger.exception("Router failed, falling back to %s", DEFAULT_ROUTE)
+        logger.exception(
+            "Router failed, falling back to %s",
+            DEFAULT_ROUTE,
+        )
         route = DEFAULT_ROUTE
 
     return {
